@@ -12,7 +12,7 @@ public class FallingSand {
 		char[][]gridArray;
 		
 		try {
-			File file = new File("C://Users/Hennig/workspace/FallingSand/sand.txt");
+			File file = new File("C://Users/******/workspace/FallingSand/sand.txt");
 			reader = new BufferedReader(new FileReader(file));
 			matrixSize = Integer.parseInt(reader.readLine());
 			gridArray = new char[matrixSize][matrixSize];
