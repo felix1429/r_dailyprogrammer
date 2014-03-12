@@ -1,3 +1,5 @@
+//http://www.reddit.com/r/dailyprogrammer/comments/1v4cjd/011314_challenge_148_easy_combination_lock/cfy31c8?context=3
+
 import java.util.*;
 
 public class CombinationLock {
