@@ -5,46 +5,65 @@ import java.util.*;
 
 public class NovelCompression1 {
 
-	private static String temp = "";
-	private static String moarTemp = "";
-	private static Integer dictionarySize;
-	private static BufferedReader reader = null;
-	private static Map<Double, String> dictionary = new HashMap<Double, String>();
-	private static StringTokenizer st = null;
+	public static String temp = "";
+	public static String blah = "";
+	public static String moarTemp = "";
+	public static Integer dictionarySize;
+	public static BufferedReader reader = null;
+	public static BufferedWriter writer = null;
+	public static String output = "";
+	public static Integer counter = 0;
+	public static Map<Double, String> dictionary = new HashMap<Double, String>();
+	public static StringTokenizer st = null;
 	
 	public static void main(String[] args) throws IOException {
 		
 		try {
-			File file = new File("C://Users/Hennig/workspace/NovelCompression1/input.txt");
+			File file = new File("C://Users/Hennig/workspace/NovelCompression1/1input.txt");
+			File oFile = new File("C://Users/Hennig/workspace/NovelCompression1/1output.txt");
 			reader = new BufferedReader(new FileReader(file));
+			writer = new BufferedWriter(new FileWriter(oFile));
 			dictionarySize = Integer.parseInt(reader.readLine());
-			for(double count = 0.0;count <= dictionarySize;count ++) {
+			for(double count = 0.0;count <= dictionarySize - 1;count ++) {
 				temp = reader.readLine();
 				dictionary.put(count, temp);
 			}
 			
-			st = new StringTokenizer(reader.readLine());
-			while(st.hasMoreTokens()) {
-				temp = st.nextToken();
-				if(isNumeric(temp) && dictionary.containsKey(Double.valueOf(temp))) { //if is just number
-					System.out.print(" " + dictionary.get(Double.valueOf(temp)));
-				}else if(temp.equals(".") || temp.equals(",") || temp.equals("?") || temp.equals("!") || temp.equals(";") || temp.equals(":") || temp.equals("-")) {
-					System.out.print(temp);
-				}else if(temp.substring((temp.length() - 1)).equals("^")) { //if has carat
-					moarTemp = dictionary.get(Double.valueOf(temp.substring(0, temp.length() - 1))); //gets dic entry
-					System.out.print(" " + Character.toUpperCase(moarTemp.charAt(0)) + moarTemp.substring(1));
-				}else if(temp.substring((temp.length() - 1)).equals("!")) { //if has exclamation point
-					moarTemp = dictionary.get(Double.valueOf((temp.substring(0, temp.length() - 1)))); //gets dic entry
-					System.out.print(" " + moarTemp.toUpperCase());
-				
-				}else if (temp.equals("r") || temp.equals("R")) {
-					System.out.println("");
-				}else if (temp.equals("e") || temp.equals("E")) {
-					System.exit(0);
+			while((blah = reader.readLine()) != null) {
+				st = new StringTokenizer(blah);
+				while(st.hasMoreTokens()) {
+					temp = st.nextToken();
+					if(temp.equals(".") || temp.equals(",") || temp.equals("?") || temp.equals("!") || temp.equals(";") || temp.equals(":") || temp.equals("-")) {
+						output += (temp);
+					}else {
+						if(counter != 0) {
+							output += (" ");
+						}	
+						if(isNumeric(temp) && dictionary.containsKey(Double.valueOf(temp))) { //if is just number
+							output += (dictionary.get(Double.valueOf(temp)));
+						}else if(temp.substring((temp.length() - 1)).equals("^")) { //if has carat
+							moarTemp = dictionary.get(Double.valueOf(temp.substring(0, temp.length() - 1))); //gets dic entry
+							output += (Character.toUpperCase(moarTemp.charAt(0)) + moarTemp.substring(1));
+						}else if(temp.substring((temp.length() - 1)).equals("!")) { //if has exclamation point
+							moarTemp = dictionary.get(Double.valueOf((temp.substring(0, temp.length() - 1)))); //gets dic entry
+							output += (moarTemp.toUpperCase());
+						}
+						
+						counter ++;
+						if (temp.equals("r") || temp.equals("R")) {
+							output += ("\r\n");
+							counter = 0;
+						}else if (temp.equals("e") || temp.equals("E")) {
+							break;
+						}
+						
+					}
 				}
 			}
+			writer.write(output);
 		}finally {
 			reader.close();
+			writer.close();
 		}
 	}
 	
