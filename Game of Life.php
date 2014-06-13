@@ -1,3 +1,4 @@
+//http://www.reddit.com/r/dailyprogrammer/comments/271xyp/622014_challenge_165_easy_ascii_game_of_life/ci5xwk4
 <?php
 $file = fopen("D:/PhpstormProjects/Game of Life/input.txt","r");
 $firstLine = explode(" ",fgets($file));
@@ -42,10 +43,11 @@ function testCell($height,$width) {
 }
 
 function checkIndex($var) {
-    if($var == 10) {
+    global $x;
+    if($var == $x) {
         return 0;
     }elseif($var == -1) {
-        return 9;
+        return $x - 1;
     }else {
         return $var;
     }
