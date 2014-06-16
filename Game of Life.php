@@ -11,26 +11,27 @@ for($i = 0;$i < $limit;$i ++) {
 }
 $copy = $array;
 for($i = 1;$i <= $iterations;$i ++) {
-    for($j = 0;$j < $x;$j ++) {
-        for($k = 0;$k < $limit;$k ++) {
+    for($j = 0;$j < $limit;$j ++) {
+        for($k = 0;$k < $x;$k ++) {
             testCell($j,$k);
         }
     }
+    usleep(150000);
+    printArray($copy);
     $array = $copy;
 }
-printArray($array);
 
 function testCell($height,$width) {
     global $array,$copy;
     $temp = 0;
-    if($array[checkIndex($height - 1)][$width] == '#') { $temp ++; }
-    if($array[checkIndex($height - 1)][checkIndex($width + 1)] == '#') { $temp ++; }
-    if($array[checkIndex($height - 1)][checkIndex($width - 1)] == '#') { $temp ++; }
-    if($array[checkIndex($height + 1)][checkIndex($width - 1)] == '#') { $temp ++; }
-    if($array[checkIndex($height + 1)][$width] == '#') { $temp ++; }
-    if($array[checkIndex($height + 1)][checkIndex($width + 1)] == '#') { $temp ++; }
-    if($array[$height][checkIndex($width + 1)] == '#') { $temp ++; }
-    if($array[$height][checkIndex($width - 1)] == '#') { $temp ++; }
+    if($array[checkIndex($height - 1,'h')][$width] == '#') { $temp ++; }
+    if($array[checkIndex($height - 1,'h')][checkIndex($width + 1,'w')] == '#') { $temp ++; }
+    if($array[checkIndex($height - 1,'h')][checkIndex($width - 1,'w')] == '#') { $temp ++; }
+    if($array[checkIndex($height + 1,'h')][checkIndex($width - 1,'w')] == '#') { $temp ++; }
+    if($array[checkIndex($height + 1,'h')][$width] == '#') { $temp ++; }
+    if($array[checkIndex($height + 1,'h')][checkIndex($width + 1,'w')] == '#') { $temp ++; }
+    if($array[$height][checkIndex($width + 1,'w')] == '#') { $temp ++; }
+    if($array[$height][checkIndex($width - 1,'w')] == '#') { $temp ++; }
     if($array[$height][$width] == '.') {
         if($temp == 3) {
             $copy[$height][$width] = '#';
@@ -42,12 +43,19 @@ function testCell($height,$width) {
     }
 }
 
-function checkIndex($var) {
-    global $x;
-    if($var == $x) {
+function checkIndex($var,$let) {
+    global $x,$limit;
+    $tempIndex = '';
+    if($let == 'h') {
+        $tempIndex = $limit;
+    }elseif($let == 'w') {
+        $tempIndex = $x;
+    }
+
+    if($var == $tempIndex) {
         return 0;
     }elseif($var == -1) {
-        return $x - 1;
+        return $tempIndex - 1;
     }else {
         return $var;
     }
@@ -55,11 +63,12 @@ function checkIndex($var) {
 
 function printArray($arrayVar) {
     global $x,$limit;
-    for($i = 0;$i < $x;$i ++) {
-        for($j = 0;$j < $limit;$j ++) {
+    for($i = 0;$i < $limit;$i ++) {
+        for($j = 0;$j < $x;$j ++) {
             echo $arrayVar[$i][$j];
         }
         echo "\n";
     }
+    echo "\n\n";
 }
 ?>
