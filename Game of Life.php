@@ -16,7 +16,7 @@ for($i = 1;$i <= $iterations;$i ++) {
             testCell($j,$k);
         }
     }
-    usleep(150000);
+    usleep(100000);
     printArray($copy);
     $array = $copy;
 }
@@ -63,12 +63,13 @@ function checkIndex($var,$let) {
 
 function printArray($arrayVar) {
     global $x,$limit;
+    $tempString = "";
     for($i = 0;$i < $limit;$i ++) {
         for($j = 0;$j < $x;$j ++) {
-            echo $arrayVar[$i][$j];
+            $tempString .= $arrayVar[$i][$j];
         }
-        echo "\n";
+        $tempString .= "\r\n";
     }
-    echo "\n\n";
+    echo $tempString . "\n\n";
 }
 ?>
